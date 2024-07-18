@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrator Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        .card-title {
+            font-size: 1.25rem;
+        }
+
+        .card-text {
+            font-size: 1.5rem;
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+        }
+
+        .form-select,
+        .form-control {
+            font-size: 0.9rem;
+            padding: 0.4rem;
+        }
+
+        .btn {
+            font-size: 0.9rem;
+            padding: 0.4rem 0.6rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <header class="row text-white" style="background-color: darkblue;">
+            <div class="col-6 col-sm-6 col-md-9">
+                <h4 class="p-4 pt-4">BHARATHIDASAN UNIVERSITY</h4>
+            </div>
+            <div class="dropdown-alignment col-6 col-sm-6 ps-5 col-md-3 text-end">
+                <img style="height: 100px; width: 180px;" src="download1.png" alt="">
+            </div>
+        </header>
+        <div class="row vh-100">
+            <!-- Sidebar -->
+            <div class="col-2 bg-light border-end d-flex flex-column sidebar">
+                <div class="container-fluid">
+                    <ul class="nav flex-column nav-pills mb-auto p-1">
+                        <li class="nav-item ">
+                            <a class="nav-link active" id="list-dashboard-tab" data-bs-toggle="tab"
+                                href="#list-dashboard">
+                                <i class="bi bi-speedometer2 me-2"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="list-students-tab" data-bs-toggle="tab" href="#list-students">
+                                <i class="bi bi-card-text"></i></i> Fees Details
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="list-fees-tab" data-bs-toggle="tab" href="#list-fees">
+                                <i class="bi bi-people-fill me-2"></i> Students
+                            </a>
+                        </li>
+                        <li class="nav-item d-flex position-fixed bottom-0">
+                            <!-- <a class="nav-link" id="list-settings-tab" data-bs-toggle="tab" href="#list-settings">
+                                <i class="bi bi-gear-fill me-2"></i> Settings
+                            </a> --><a href="logout.html" class="btn btn-danger">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Page Content -->
+            <div class="col-10">
+                <div class="tab-content">
+                    <!-- Dashboard Tab -->
+                    <div class="tab-pane fade show active" id="list-dashboard" role="tabpanel"
+                        aria-labelledby="list-dashboard-tab">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12 p-4">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="card text-center mb-4">
+                                                <div class="card-body">
+                                                    <i class="bi bi-person-circle card-icon mb-2"></i>
+                                                    <h5 class="card-title card-text">Total Students</h5>
+                                                    <p class="card-text" id="total-students">1200</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="card text-center mb-4">
+                                                <div class="card-body">
+                                                    <i class="bi bi-cloud-upload card-icon mb-2"></i>
+                                                    <h5 class="card-title card-text">Fees Uploaded</h5>
+                                                    <p class="card-text" id="fees-uploaded">900</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="card text-center mb-4">
+                                                <div class="card-body">
+                                                    <i class="bi bi-file-earmark-check card-icon mb-2"></i>
+                                                    <h5 class="card-title card-text">Files Verified</h5>
+                                                    <p class="card-text" id="files-verified">850</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="card text-center mb-4">
+                                                <div class="card-body">
+                                                    <i class="bi bi-hourglass-split card-icon mb-2"></i>
+                                                    <h5 class="card-title card-text">Pending </h5>
+                                                    <p class="card-text" id="pending-verification">50</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Fees Details Tab -->
+                    <div class="tab-pane fade" id="list-students" role="tabpanel" aria-labelledby="list-students-tab">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12 mt-4">
+                                    <form class="row g-2 mb-4">
+                                        <div class="col-md-2">
+                                            <select class="form-select" id="branchSelect">
+                                                <option selected>Course</option>
+                                                <option value="MCA">MCA</option>
+                                                <option value="MSC Computer Science">MSC Computer Science</option>
+                                                <option value="MSC Data Science">MSC Data Science</option>
+                                                <option value="MSC Artificial Intelligence">MSC Artificial Intelligence
+                                                </option>
+                                                <option value="M.TECH">M.TECH</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <select class="form-select" id="yearSelect">
+                                                <option selected>Year</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <select class="form-select" id="feeTypeSelect">
+                                                <option selected>Select Fee Type</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input class="form-control" type="search" placeholder="Reference ID"
+                                                aria-label="Search">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input class="form-control" type="date" placeholder="Date"
+                                                aria-label="Search">
+                                        </div>
+                                        <div class="col-md-1 d-grid">
+                                            <button class="btn btn-outline-success" type="submit">Search</button>
+                                        </div>
+                                        <div class="col-md-1 d-grid">
+                                            <button class="btn btn-outline-danger" type="button">Export</button>
+                                        </div>
+                                    </form>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Reference ID</th>
+                                                    <th>Student ID</th>
+                                                    <th>Name</th>
+                                                    <th>Course</th>
+                                                    <th>Year</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>REF12345</td>
+                                                    <td>9585959</td>
+                                                    <td>SHRIRAM SUDHARSAN B</td>
+                                                    <td>MCA</td>
+                                                    <td>4th Year</td>
+                                                    <td>
+                                                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                                            data-bs-target="#pdfModal">View</button>
+                                                    </td>
+                                                </tr>
+                                                <!-- Additional student rows can be added here -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Students Tab -->
+                    <div class="tab-pane fade" id="list-fees" role="tabpanel" aria-labelledby="list-fees-tab">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12 mt-4">
+                                    <form class="d-flex mb-4">
+                                        <select class="form-select me-2" id="branchSelect">
+                                            <option selected>Course</option>
+                                            <option value="MCA">MCA</option>
+                                            <option value="MSC Computer Science">MSC Computer Science</option>
+                                            <option value="MSC Data Science">MSC Data Science</option>
+                                            <option value="MSC Artificial Intelligence">MSC Artificial Intelligence
+                                            </option>
+                                            <option value="M.TECH">M.TECH</option>
+                                        </select>
+                                        <select class="form-select me-2" id="yearSelect">
+                                            <option selected>Year</option>
+                                        </select>
+                                        <select class="form-select me-2" id="feeTypeSelect">
+                                            <option selected>Select Fee Type</option>
+                                        </select>
+                                        <button class="btn btn-outline-success" type="submit">Search</button>
+                                    </form>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>S.No</th>
+                                                    <th>Student Name</th>
+                                                    <th>Reference ID</th>
+                                                    <th>Fee Type</th>
+                                                    <th>Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>John Doe</td>
+                                                    <td>REF123456</td>
+                                                    <td>Exam 1</td>
+                                                    <td>01-05-2024</td>
+
+                                                    <td>
+                                                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                                            data-bs-target="#pdfModal">View</button>
+                                                    </td>
+                                                </tr>
+                                                <!-- Additional fee rows can be added here -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Settings Tab -->
+                    <!-- <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-tab">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h1 class="mt-4">Settings</h1>
+                                    <div class="border p-4">
+                                        <form>
+                                            <div class="mb-3">
+                                                <label for="username" class="form-label">Username</label>
+                                                <input type="text" class="form-control" id="username" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="email" class="form-label">Email</label>
+                                                <input type="email" class="form-control" id="email" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="profilePhoto" class="form-label">Profile Photo</label>
+                                                <input type="file" class="form-control" id="profilePhoto" accept="image/*">
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                                        </form>
+                                        <hr>
+                                        
+                                        <a href="logout.html" class="btn btn-danger">Logout</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid bg-info">
+            <div class="container">
+                <!-- Additional content goes here -->
+                <div class="row">
+                    <div class="col">
+                        <!-- Additional content can be added here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="pdfModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="pdfModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="pdfModalLabel">PDF</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <iframe src="dummy.pdf" width="100%" height="500px"></iframe>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" id="verifyBtn">Verify</button>
+                    <button type="button" class="btn btn-danger" id="rejectBtn">Reject</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script>
+        document.getElementById('branchSelect').addEventListener('change', function () {
+            const yearSelect = document.getElementById('yearSelect');
+            yearSelect.innerHTML = ''; // Clear existing options
+
+            if (this.value === 'M.TECH') {
+                for (let i = 1; i <= 6; i++) {
+                    const option = document.createElement('option');
+                    option.value = i;
+                    option.text = i;
+                    yearSelect.appendChild(option);
+                }
+            } else {
+                ['1', '2'].forEach(year => {
+                    const option = document.createElement('option');
+                    option.value = year;
+                    option.text = year;
+                    yearSelect.appendChild(option);
+                });
+            }
+        });
+
+        document.getElementById('yearSelect').addEventListener('change', function () {
+            const feeTypeSelect = document.getElementById('feeTypeSelect');
+            feeTypeSelect.innerHTML = ''; // Clear existing options
+
+            const year = parseInt(this.value);
+
+            if (!isNaN(year)) {
+                for (let i = 1; i <= 2; i++) {
+                    const semesterOption = document.createElement('option');
+                    semesterOption.value = `Semester ${2 * (year - 1) + i}`;
+                    semesterOption.text = `Semester ${2 * (year - 1) + i}`;
+                    feeTypeSelect.appendChild(semesterOption);
+
+                    const examOption = document.createElement('option');
+                    examOption.value = `Exam ${2 * (year - 1) + i}`;
+                    examOption.text = `Exam ${2 * (year - 1) + i}`;
+                    feeTypeSelect.appendChild(examOption);
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
