@@ -1,7 +1,8 @@
 .env
 env/
 sample_data/
-
+todo.txt
+documents/
 # Django #
 *.log
 *.pot
