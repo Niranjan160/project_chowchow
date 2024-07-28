@@ -34,5 +34,10 @@ class CustomUserCreationForm(UserCreationForm):
 class fees_details_form(forms.ModelForm):
     class Meta:
         model = Fees_detail
-        fields = ["type_of_fees", "semester_number","reference_id","paid_date", "fees_amount", "fees_receipt"]
+        fields = [
+            "type_of_fees", "semester_number","reference_id",
+            "paid_date", "fees_amount", "fees_receipt"]
+        widgets = {
+            'paid_date': forms.SelectDateWidget,
+        }
         

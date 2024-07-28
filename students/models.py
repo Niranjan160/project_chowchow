@@ -120,20 +120,22 @@ receipt_status_choices = (
 def student_fees_directory(instance, filename):
     ext = filename.split('.')[-1]
     # path = fees_receipt/2024/EF/MSC/<dept?>/S1/<reg_no>.pdf
-    return "fees_receipts/{0}/{1}/{2}/{3}/semester_{4}/{5}.{6}".format(
+    return "fees_receipts/{0}/{1}/{2}/{3}/semester_{4}/{5}-{6}.{7}".format(
         date.today().year,
         instance.type_of_fees,
         instance.student_id.type_of_degree,
         (instance.student_id.type_of_department or ""),
         instance.semester_number,
         instance.student_id.register_no,
+        instance.reference_id,
         ext,
     )
 
 
 class Fees_detail(models.Model):
-    reference_id = models.IntegerField(
-        primary_key=True
+    reference_id = models.CharField(
+        primary_key=True,
+        max_length=30
     )
     student_id = models.ForeignKey(
         "Student", 

@@ -2,19 +2,24 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from students.models import Student
-# Create your views here.
-
+from students.models import Student, Fees_detail
+from students.forms import fees_details_form
 
 @login_required
 def student_dashboard(request):
     if request.user.is_office_admin(): 
         return redirect("admin_dashboard")
     context = {}
-    if request.method == "GET":
-        context["student"] = Student.objects.get(Student=request.user)
-    elif request.method == "POST":
-        pass
+    context["form"] = fees_details_form()
+    context["student"] = Student.objects.get(Student=request.user)
+    context["fees_history"] = Fees_detail.objects.filter(student_id=context["student"])
+    if request.method == "POST":
+        fees_details = fees_details_form(request.POST, request.FILES)
+        # print(fees_details.data)
+        if fees_details.is_valid():
+            fees_details = fees_details.save(commit=False)
+            fees_details.student_id = context["student"]
+            fees_details.save()
     return render(request, 'students/student_dashboard.html', context=context)
 
 @login_required

@@ -92,7 +92,8 @@
                                 <div class="col-12">
                                     <h1 class="mt-4">Fees Upload</h1>
                                     <div class="border p-4">
-                                        <form class="row g-3">
+                                        <form class="row g-3" method="post" action="/" enctype="multipart/form-data">
+                                            {% csrf_token %}
                                             <!-- <div class="col-md-6">
                                                 <label for="selectcourse">Select Course</label>
                                                 <select class="form-select col-md-6">
@@ -107,34 +108,37 @@
                                             <div class="col-md-6">
                                                 <label for="Selectfeestype" class="form-label"> Select Fees Type</label>
                                                 <select class="form-select me-2" id="feesType"
-                                                    onchange="updateSemesterOptions()">
-                                                    <option selected=" Fees type">Fees type</option>
-                                                    <option value="semester">Semester fees</option>
-                                                    <option value="examination">Examination fees</option>
+                                                    onchange="updateSemesterOptions()" name="type_of_fees">
+                                                    <option value="SF">Semester fees</option>
+                                                    <option value="EF">Examination fees</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="selectSemester">Select Semester/Exam</label>
-                                                <select class="form-select col-md-6" id="selectSemester" required>
+                                                <select class="form-select col-md-6" id="selectSemester" required
+                                                    name="semester_number">
                                                     <!-- Options will be dynamically updated by JavaScript -->
                                                 </select>
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="referenceId" class="form-label">Reference ID</label>
-                                                <input type="text" class="form-control" id="referenceId" required>
+                                                <input type="text" class="form-control" id="referenceId" required
+                                                    name="reference_id">
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="paidDate" class="form-label">Fees Paid Date</label>
-                                                <input type="date" class="form-control" id="paidDate" required>
+                                                <input type="date" class="form-control" id="paidDate" required
+                                                    name="paid_date">
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="paymentAmount" class="form-label">Payment Amount</label>
-                                                <input type="number" class="form-control" id="paymentAmount" required>
+                                                <input type="number" class="form-control" id="paymentAmount" required
+                                                    name="fees_amount">
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="feeReceipt" class="form-label">Upload Fee Receipt</label>
-                                                <input type="file" class="form-control" id="feeReceipt" accept="image/*"
-                                                    required>
+                                                <input type="file" class="form-control" id="feesReceipt" accept="pdf/*"
+                                                    required name="fees_receipt">
                                             </div>
                                             <div class="col-md-6 mt-5">
                                                 <button type="submit" class="btn btn-primary">Upload Fee</button>
@@ -155,16 +159,19 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                    {% for item in fees_history %}
                                                     <tr>
-                                                        <td>REF12345</td>
-                                                        <td>Semester 1</td>
-                                                        <td>23-10-2023</td>
-                                                        <td>5000</td>
+                                                        <td>{{item.reference_id}}</td>
+                                                        <td>Semester {{item.semester_number}}</td>
+                                                        <td>{{item.paid_date}}</td>
+                                                        <td>{{item.fees_amount}}</td>
                                                         <td><button class="btn btn-primary btn-sm"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#pdfModal">View</button></td>
+                                                                data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                                                data-bs-url="{{item.fees_receipt.url}}">View</button>
+                                                        </td>
 
                                                     </tr>
+                                                    {% endfor %}
                                                     <!-- Additional rows can be added here -->
                                                 </tbody>
                                             </table>
@@ -226,16 +233,15 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <iframe src="dummy.pdf" width="100%" height="300px"></iframe>
+                    <iframe id="receiptEmbed" src="" width="100%" height="300px"></iframe>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-success" id="verifyBtn">Verify</button>
-                    <button type="button" class="btn btn-danger" id="rejectBtn">Reject</button>
                 </div>
             </div>
         </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
@@ -244,7 +250,7 @@
             const feesType = document.getElementById('feesType').value;
             const selectSemester = document.getElementById('selectSemester');
 
-            if (feesType === 'semester') {
+            if (feesType === 'SF') {
                 selectSemester.innerHTML = `
                     <option value="1">Semester 1</option>
                     <option value="2">Semester 2</option>
@@ -259,7 +265,7 @@
                     <option value="11">Semester 11</option>
                     <option value="12">Semester 12</option>
                 `;
-            } else if (feesType === 'examination') {
+            } else if (feesType === 'EF') {
                 selectSemester.innerHTML = `
                     <option value="1">Exam 1</option>
                     <option value="2">Exam 2</option>
@@ -276,6 +282,15 @@
                 `;
             }
         }
+        updateSemesterOptions();
+
+        $('#pdfModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var url = button.data('bs-url') // Extract info from data-* attributes
+            var modal = $(this)
+            modal.find('#receiptEmbed').attr('bs-src', url)
+        })
+
     </script>
 </body>
 
