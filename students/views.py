@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from students.models import Student
 # Create your views here.
 
 
@@ -9,7 +10,12 @@ from django.contrib.auth.decorators import login_required
 def student_dashboard(request):
     if request.user.is_office_admin(): 
         return redirect("admin_dashboard")
-    return render(request, 'students/student_dashboard.html')
+    context = {}
+    if request.method == "GET":
+        context["student"] = Student.objects.get(Student=request.user)
+    elif request.method == "POST":
+        pass
+    return render(request, 'students/student_dashboard.html', context=context)
 
 @login_required
 def admin_dashboard(request):

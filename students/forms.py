@@ -1,7 +1,7 @@
 from typing import Any
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import User
+from .models import User, Fees_detail
 
 class CustomUserCreationForm(UserCreationForm):
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
@@ -29,3 +29,10 @@ class CustomUserCreationForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+
+class fees_details_form(forms.ModelForm):
+    class Meta:
+        model = Fees_detail
+        fields = ["type_of_fees", "semester_number","reference_id","paid_date", "fees_amount", "fees_receipt"]
+        

@@ -62,15 +62,21 @@
                                             </div>
                                             <div class="col-md-8">
                                                 <div class="card-body">
-                                                    <h5 class="card-title">SHRIRAM SUDHARSAN B</h5>
-                                                    <p class="card-text"><strong>Register no:</strong> 9585959</p>
-                                                    <p class="card-text"><strong>Course:</strong> MCA
+                                                    <h5 class="card-title">{{student.name}}</h5>
+                                                    <p class="card-text"><strong>Register no:</strong>
+                                                        {{student.register_no}}</p>
+                                                    <p class="card-text"><strong>Course:</strong>
+                                                        {{student.type_of_degree}}
                                                     </p>
-                                                    <p class="card-text"><strong>Year:</strong> 2nd Year</p>
-                                                    <p class="card-text"><strong>Email:</strong> shriram@gmail.com</p>
-                                                    <p class="card-text"><strong>Phone:</strong> +91 93452168700</p>
-                                                    <p class="card-text"><strong>Address:</strong> no.44 Mariyamman
-                                                        kovil Street, Muthalayar Chattiram, Trichy-1</p>
+                                                    <p class="card-text"><strong>Academic Year:</strong>
+                                                        {{ student.academic_start_year.year }} -
+                                                        {{ student.academic_end_year.year }}</p>
+                                                    <p class="card-text"><strong>Email:</strong> {{student.email}}</p>
+                                                    <p class="card-text"><strong>Phone:</strong>
+                                                        {{student.phone_number}}</p>
+                                                    <p class="card-text"><strong>Address:</strong>
+                                                        {{ student.address }}
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>

@@ -5,6 +5,7 @@ from .managers import CustomUserManager
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import MaxValueValidator, MinValueValidator
 from datetime import date
+from django.utils import timezone
 
 
 department_choices = (
@@ -26,7 +27,7 @@ class User(AbstractUser):
     )
     username = None
     email = models.EmailField(_("email address"), unique=True)
-    role = models.CharField(max_length=5, choices=ROLE_CHOICES, default="Student")
+    role = models.CharField(max_length=5, choices=ROLE_CHOICES, default="S")
     is_active = models.BooleanField(default=True)
 
 
@@ -61,17 +62,50 @@ class Student(models.Model):
         null=True,
         limit_choices_to={"role": "S"}
     )
-    register_no = models.CharField(primary_key=True, max_length=30)
-    name = models.CharField(max_length=100)
+    register_no = models.CharField(
+        primary_key=True, 
+        max_length=30
+    )
+    name = models.CharField(
+        max_length=100
+    )
     date_of_birth = models.DateField()
-    email = models.EmailField(unique=True)
+    email = models.EmailField(
+        unique=True, 
+        validators=[
+
+        ]
+    )
     phone_number = models.PositiveIntegerField()
-    type_of_degree = models.CharField(max_length=5,choices=degree_choices) #Require validator function
-    type_of_department = models.CharField(max_length=5,choices=department_choices)
+    type_of_degree = models.CharField(
+        max_length=5,
+        choices=degree_choices
+    ) #Require validator function
+    type_of_department = models.CharField(
+        max_length=5,
+        choices=department_choices
+    )
+    academic_start_year = models.DateField(blank=True, null=True)
+    academic_end_year = models.DateField(blank=True, null=True)
+    address = models.CharField(max_length=200, null=True)
 
     def __str__(self) -> str:
         return f"{self.register_no} - {self.name}"
 
+    # def clean(self) -> None:
+    #     super().clean()
+    #     if self.Student.email != self.email:
+    #         raise ValidationError({"Email does not getting matched"})
+
+    @property
+    def current_semester(self):
+        if not self.academic_start_year or not self.academic_end_year:
+            return None
+        total_months = (self.academic_end_year.year - self.academic_start_year.year) * 12 + (self.academic_end_year.month - self.academic_start_year.month)
+        months_per_semester = total_months / 6
+        months_since_start = (timezone.now().year - self.academic_start_year.year) * 12 + (timezone.now().month - self.academic_start_year.month)
+        current_semester = (months_since_start // months_per_semester) + 1
+        return int(current_semester)
 
 fees_choices = (
 ("SF", "Semester Fees"),
@@ -123,7 +157,8 @@ class Fees_detail(models.Model):
     )
     receipt_status = models.CharField(
         max_length=5,
-        choices=receipt_status_choices
+        choices=receipt_status_choices,
+        default="PEN"
     )
     fees_receipt = models.FileField(
         upload_to=student_fees_directory,
