@@ -1,31 +1,57 @@
-{% for item in page_obj %}
+<!-- templates/item_list.html -->
+<!DOCTYPE html>
+<html lang="en">
 
-{{ item.reference_id }}
-<p hx-swap-oob="true" id="status-{{ item.reference_id }}">{{ item.get_receipt_status_display }}</p>
-<!-- <button class="btn btn-success" hx-post="{% url 'admin_dashboard_pending_details' %}"
-    hx-target="#status-{{ item.reference_id }}" hx-swap="outerHTML">
-    Accept
-</button>
-<button class="btn btn-danger" hx-post="{% url 'admin_dashboard_pending_details' %}"
-    hx-target="#status-{{ item.reference_id }}" hx-swap="outerHTML">
-    Reject
-</button>  --><br>
-{% endfor %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Item List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://unpkg.com/htmx.org@1.6.1"></script>
+</head>
 
-<div class="pagination">
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-        <a href="?page=1">&laquo; first</a>
-        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-        {% endif %}
+<body>
+    {% csrf_token %}
+    {% for item in page_obj %}
+    <div>
+        {{ item.reference_id }}
+        <p hx-swap-oob="true" id="status-{{ item.reference_id }}">{{ item.get_receipt_status_display }}</p>
+        <input type="hidden" name="reference_id" value="{{ item.reference_id }}"
+            id="reference-id-{{ item.reference_id }}">
 
-        <span class="current">
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        <input type="hidden" name="receipt_status" id="status-accept-{{ item.reference_id }}" value="ACC">
+        <button class="btn btn-success" hx-post="{% url 'update_fees_receipt_status' %}"
+            hx-target="#status-{{ item.reference_id }}"
+            hx-include="#reference-id-{{ item.reference_id }}, #status-accept-{{ item.reference_id }}, [name='csrfmiddlewaretoken']">Accept
+        </button>
+
+        <input type="hidden" name="receipt_status" id="status-reject-{{ item.reference_id }}" value="REJ">
+        <button class="btn btn-danger" hx-post="{% url 'update_fees_receipt_status' %}"
+            hx-target="#status-{{ item.reference_id }}"
+            hx-include="#reference-id-{{ item.reference_id }}, #status-reject-{{ item.reference_id }}, [name='csrfmiddlewaretoken']">Reject
+        </button>
+        <br>
+    </div>
+    {% endfor %}
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
         </span>
+    </div>
 
-        {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}">next</a>
-        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-        {% endif %}
-    </span>
-</div>
+</body>
+
+</html>

@@ -155,6 +155,7 @@
                                                         <th>Fee Type</th>
                                                         <th>Date</th>
                                                         <th>Amount</th>
+                                                        <th>Status</th>
                                                         <th>Receipt</th>
                                                     </tr>
                                                 </thead>
@@ -165,6 +166,7 @@
                                                         <td>Semester {{item.semester_number}}</td>
                                                         <td>{{item.paid_date}}</td>
                                                         <td>{{item.fees_amount}}</td>
+                                                        <td>{{item.get_receipt_status_display}}</td>
                                                         <td><button class="btn btn-primary btn-sm"
                                                                 data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                                 data-bs-url="{{item.fees_receipt.url}}">View</button>

@@ -88,13 +88,15 @@ def pending_receipt_details(request):
 @login_required
 def update_fees_receipt_status(request):
     # Need to add exception
+    print("working")
     if request.method == "POST":
-        status = request.POST["status"]
+        status = request.POST["receipt_status"]
         reference_id = request.POST["reference_id"]
+        print(status, reference_id)
         fees_detail = Fees_detail.objects.get(reference_id=reference_id)
         fees_detail.receipt_status = status
         fees_detail.save()
-        return redirect('admin_dashboard_student_details')
+        return redirect('admin_dashboard_student_details') # uodate it to jsonResponse
     else: 
         return HttpResponseBadRequest("Not like this :)")
 

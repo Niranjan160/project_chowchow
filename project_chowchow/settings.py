@@ -48,6 +48,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'students.middleware.XFrameOptionsMiddleware'
 ]
 
 ROOT_URLCONF = 'project_chowchow.urls'
@@ -101,6 +102,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTH_USER_MODEL = "students.User"
+
+X_FRAME_OPTIONS = "SAMEORIGIN"
 
 LOGIN_URL = 'login/'
 # Internationalization

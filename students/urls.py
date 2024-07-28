@@ -9,4 +9,5 @@ urlpatterns = [
     path("officeadmin/", views.admin_dashboard, name="admin_dashboard"),
     path("officeadmin/studentdetails", views.admin_dashboard_student_details, name="admin_dashboard_student_details"),
     path("officeadmin/pendingdetails", views.pending_receipt_details, name="admin_dashboard_pending_details"),
+    path("officeadmin/updatefeesdetail", views.update_fees_receipt_status, name="update_fees_receipt_status"),
 ]
