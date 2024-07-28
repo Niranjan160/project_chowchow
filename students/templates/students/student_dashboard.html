@@ -283,13 +283,18 @@
             }
         }
         updateSemesterOptions();
+        document.addEventListener('DOMContentLoaded', function () {
+            var modal = document.getElementById('pdfModal');
+            modal.addEventListener('show.bs.modal', function (event) {
+                var button = event.relatedTarget;
+                var url = button.getAttribute('data-bs-url');
+                var modalTitle = modal.querySelector('.modal-title');
+                var modalBodyEmbed = modal.querySelector('#receiptEmbed');
 
-        $('#pdfModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget) // Button that triggered the modal
-            var url = button.data('bs-url') // Extract info from data-* attributes
-            var modal = $(this)
-            modal.find('#receiptEmbed').attr('bs-src', url)
-        })
+                modalTitle.textContent = 'Receipt';
+                modalBodyEmbed.setAttribute('src', url);
+            });
+        });
 
     </script>
 </body>

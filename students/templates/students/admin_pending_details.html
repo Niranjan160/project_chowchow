@@ -1,0 +1,31 @@
+{% for item in page_obj %}
+
+{{ item.reference_id }}
+<p hx-swap-oob="true" id="status-{{ item.reference_id }}">{{ item.get_receipt_status_display }}</p>
+<!-- <button class="btn btn-success" hx-post="{% url 'admin_dashboard_pending_details' %}"
+    hx-target="#status-{{ item.reference_id }}" hx-swap="outerHTML">
+    Accept
+</button>
+<button class="btn btn-danger" hx-post="{% url 'admin_dashboard_pending_details' %}"
+    hx-target="#status-{{ item.reference_id }}" hx-swap="outerHTML">
+    Reject
+</button>  --><br>
+{% endfor %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+        <a href="?page=1">&laquo; first</a>
+        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
