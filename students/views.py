@@ -3,9 +3,10 @@ from django.http import HttpResponseBadRequest
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from students.models import Student, Fees_detail
-from students.forms import fees_details_form
+from students.forms import fees_details_form, CustomUserCreationForm, StudentForm
 from datetime import date
 from django.core.paginator import Paginator
+from students.utils import send_reject_email
 
 def loginPage(request):
     if request.user.is_authenticated:
@@ -48,6 +49,33 @@ def logoutPage(request):
 #             return redirect('login')
 
 #         return render(request, 'appone/register.html', context)
+
+def register_student(request):
+    if request.user.is_authenticated:
+        return redirect('student_dashboard')
+    else:   
+        if request.method == 'POST':
+            user_form = CustomUserCreationForm(request.POST)
+            student_form = StudentForm(request.POST)
+            if user_form.is_valid() and student_form.is_valid():
+                user = user_form.save(commit=False)
+                user.save()
+
+                student = student_form.save(commit=False)
+                print(user)
+                student.student_id = user
+                student.email = user.email
+                student.save()
+
+                return redirect('login_page')  # Redirect to login or any other page after successful registration
+        else:
+            user_form = CustomUserCreationForm()
+            student_form = StudentForm()
+
+        return render(request, 'students/student_register_page.html', {
+            'user_form': user_form,
+            'student_form': student_form
+        })
 
 @login_required
 def student_dashboard(request):
@@ -93,6 +121,9 @@ def update_fees_receipt_status(request):
         status = request.POST["receipt_status"]
         reference_id = request.POST["reference_id"]
         print(status, reference_id)
+        student = Fees_detail.objects.get(reference_id=reference_id).student_id
+        if status == "REJ":
+            send_reject_email(student.name, student.register_no, student.email)
         fees_detail = Fees_detail.objects.get(reference_id=reference_id)
         fees_detail.receipt_status = status
         fees_detail.save()

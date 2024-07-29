@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-
+from students.creds import email_id, email_key
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -104,6 +104,13 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTH_USER_MODEL = "students.User"
 
 X_FRAME_OPTIONS = "SAMEORIGIN"
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = email_id
+EMAIL_HOST_PASSWORD = email_key
 
 LOGIN_URL = 'login/'
 # Internationalization

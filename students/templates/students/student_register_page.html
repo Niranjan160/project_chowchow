@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Student</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h2>Register Student</h2>
+        <!-- <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ user_form.as_p }}
+            </div>
+            <div class="form-group">
+                {{ student_form.as_p }}
+            </div>
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form> -->
+        <form method="post" data-bitwarden-watching="1">
+            {% csrf_token %}
+            <div class="form-group">
+                <p>
+                    <label for="id_email">Email address:</label>
+                    <input type="email" name="email" maxlength="254" autofocus="" class="form-control" required=""
+                        id="id_email">
+                </p>
+                <p>
+                    <label for="id_password1">Password:</label>
+                    <input type="password" name="password1" class="form-control" required="" id="id_password1">
+                </p>
+                <p>
+                    <label for="id_password2">Confirm Password:</label>
+                    <input type="password" name="password2" class="form-control" required="" id="id_password2">
+
+
+
+
+                </p>
+            </div>
+            <div class="form-group">
+                <p>
+                    <label for="id_register_no">Register no:</label>
+                    <input type="text" name="register_no" maxlength="30" required="" id="id_register_no">
+
+
+                </p>
+
+
+                <p>
+                    <label for="id_name">Name:</label>
+                    <input type="text" name="name" maxlength="100" required="" id="id_name">
+
+
+                </p>
+
+
+                <p>
+                    <label for="id_date_of_birth">Date of birth:</label>
+                    <input type="text" name="date_of_birth" required="" id="id_date_of_birth">
+
+
+                </p>
+
+
+                <p>
+                    <label for="id_phone_number">Phone number:</label>
+                    <input type="number" name="phone_number" min="0" required="" id="id_phone_number">
+
+
+                </p>
+
+
+                <p>
+                    <label for="id_type_of_degree">Type of degree:</label>
+                    <select name="type_of_degree" required="" id="id_type_of_degree">
+                        <option value="" selected="">---------</option>
+
+                        <option value="MSC">Master of Science</option>
+
+                        <option value="MCA">Master of Computer Application</option>
+
+                        <option value="MTECH">Master of Technology</option>
+
+                    </select>
+
+
+                </p>
+
+
+                <p>
+                    <label for="id_type_of_department">Type of department:</label>
+                    <select name="type_of_department" required="" id="id_type_of_department">
+                        <option value="" selected="">---------</option>
+
+                        <option value="CSE">Computer Science and Engineering</option>
+
+                        <option value="DS">Data Science</option>
+
+                        <option value="AI">Artificial Intelligence</option>
+
+                    </select>
+
+
+                </p>
+
+
+                <p>
+                    <label for="id_academic_start_year">Academic start year:</label>
+                    <input type="text" name="academic_start_year" id="id_academic_start_year">
+
+
+                </p>
+
+
+                <p>
+                    <label for="id_academic_end_year">Academic end year:</label>
+                    <input type="text" name="academic_end_year" id="id_academic_end_year">
+
+
+                </p>
+
+
+                <p>
+                    <label for="id_address">Address:</label>
+                    <input type="text" name="address" maxlength="200" required="" id="id_address">
+
+
+
+
+                </p>
+            </div>
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -3,6 +3,7 @@ env/
 sample_data/
 todo.txt
 documents/
+creds.py
 # Django #
 *.log
 *.pot

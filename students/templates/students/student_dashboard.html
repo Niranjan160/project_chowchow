@@ -66,7 +66,8 @@
                                                     <p class="card-text"><strong>Register no:</strong>
                                                         {{student.register_no}}</p>
                                                     <p class="card-text"><strong>Course:</strong>
-                                                        {{student.type_of_degree}}
+                                                        {{ student.type_of_degree }}
+                                                        {{ student.get_type_of_department_display }}
                                                     </p>
                                                     <p class="card-text"><strong>Academic Year:</strong>
                                                         {{ student.academic_start_year.year }} -
