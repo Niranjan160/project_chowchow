@@ -54,6 +54,14 @@ class User(AbstractUser):
         return self.email
 
 
+def student_profile_image_directory(instance, filename):
+    ext = filename.split('.')[-1]
+    # path = profile_images/<reg_no>.<img_extension>
+    return "profile_images{1}.{2}".format(
+        instance.register_no,
+        ext,
+    )
+
 class Student(models.Model):
 
     Student = models.OneToOneField(
@@ -61,6 +69,11 @@ class Student(models.Model):
         on_delete=models.SET_NULL,
         null=True,
         limit_choices_to={"role": "S"}
+    )
+    profile_photo = models.FileField(
+        upload_to=student_profile_image_directory,
+        default=None,
+        null=True
     )
     register_no = models.CharField(
         primary_key=True, 

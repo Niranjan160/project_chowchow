@@ -168,11 +168,11 @@
                                                         <td>{{item.paid_date}}</td>
                                                         <td>{{item.fees_amount}}</td>
                                                         <td>{{item.get_receipt_status_display}}</td>
-                                                        <td><button class="btn btn-primary btn-sm"
+                                                        <td>
+                                                            <button class="btn btn-primary btn-sm"
                                                                 data-bs-toggle="modal" data-bs-target="#pdfModal"
                                                                 data-bs-url="{{item.fees_receipt.url}}">View</button>
                                                         </td>
-
                                                     </tr>
                                                     {% endfor %}
                                                     <!-- Additional rows can be added here -->
@@ -286,6 +286,7 @@
             }
         }
         updateSemesterOptions();
+
         document.addEventListener('DOMContentLoaded', function () {
             var modal = document.getElementById('pdfModal');
             modal.addEventListener('show.bs.modal', function (event) {

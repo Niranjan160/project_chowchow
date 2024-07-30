@@ -177,11 +177,8 @@
                 <div class="modal-footer">
                     {% csrf_token %}
                     {% for item in page_obj %}
-                    {{ item.reference_id }}
-                    <p hx-swap-oob="true" id="status-{{ item.reference_id }}">{{ item.get_receipt_status_display }}</p>
                     <input type="hidden" name="reference_id" value="{{ item.reference_id }}"
                         id="reference-id-{{ item.reference_id }}">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 
                     <input type="hidden" name="receipt_status" id="status-accept-{{ item.reference_id }}" value="ACC">
                     <button class="btn btn-success" hx-post="{% url 'update_fees_receipt_status' %}"
@@ -245,7 +242,7 @@
             }
         });
 
-         updateSemesterOptions();
+        updateSemesterOptions();
         document.addEventListener('DOMContentLoaded', function () {
             var modal = document.getElementById('pdfModal');
             modal.addEventListener('show.bs.modal', function (event) {

@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from django.http import HttpResponseBadRequest
+from django.http import HttpResponseBadRequest, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from students.models import Student, Fees_detail
@@ -7,6 +7,7 @@ from students.forms import fees_details_form, CustomUserCreationForm, StudentFor
 from datetime import date
 from django.core.paginator import Paginator
 from students.utils import send_reject_email
+import pandas as pd
 
 def loginPage(request):
     if request.user.is_authenticated:
@@ -144,3 +145,25 @@ def admin_dashboard_student_details(request):
     context["page_obj"] = paginator.get_page(page_number)
     return render(request, 'students/admin_dashboard_student_details.html', context)
 
+def export_students_to_excel(request):
+    # Get all students
+    students = Student.objects.all()
+
+    # Create a DataFrame
+    student_data = []
+    for student in students:
+        sd = vars(student)
+        sd.pop('_state')
+        student_data.append(sd)
+
+    df = pd.DataFrame(student_data)
+
+    # Create an HttpResponse object with the appropriate Excel header.
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename=students.xlsx'
+
+    # Use pandas to create an Excel writer object and write the DataFrame to it.
+    with pd.ExcelWriter(response, engine='openpyxl') as writer:
+        df.to_excel(writer, sheet_name='Students', index=False)
+
+    return response
