@@ -27,17 +27,19 @@
                 <div class="container-fluid">
                     <ul class="nav flex-column nav-pills mb-auto p-1">
                         <li class="nav-item">
-                            <a class="nav-link" id="list-dashboard-tab" href="dashboard.html">
+                            <a class="nav-link" id="list-dashboard-tab" href="{% url 'admin_dashboard' %}">
                                 <i class="bi bi-speedometer2 me-2"></i> Dashboard
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="list-students-tab" href="fees_details.html">
+                            <a class="nav-link" id="list-students-tab"
+                                href="{% url 'admin_dashboard_pending_details' %}">
                                 <i class="bi bi-card-text"></i> Fees Details
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" id="list-fees-tab" href="students.html">
+                            <a class="nav-link active" id="list-fees-tab"
+                                href="{% url 'admin_dashboard_student_details' %}">
                                 <i class="bi bi-people-fill me-2"></i> Students
                             </a>
                         </li>

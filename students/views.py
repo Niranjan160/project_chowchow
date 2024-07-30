@@ -128,7 +128,7 @@ def update_fees_receipt_status(request):
         fees_detail = Fees_detail.objects.get(reference_id=reference_id)
         fees_detail.receipt_status = status
         fees_detail.save()
-        return redirect('admin_dashboard_student_details') # uodate it to jsonResponse
+        return HttpResponse(f"{fees_detail.receipt_status}") # uodate it to jsonResponse
     else: 
         return HttpResponseBadRequest("Not like this :)")
 

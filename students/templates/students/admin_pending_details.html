@@ -28,17 +28,18 @@
                 <div class="container-fluid">
                     <ul class="nav flex-column nav-pills mb-auto p-1">
                         <li class="nav-item">
-                            <a class="nav-link" id="list-dashboard-tab" href="dashboard.html">
+                            <a class="nav-link" id="list-dashboard-tab" href="{% url 'admin_dashboard' %}">
                                 <i class="bi bi-speedometer2 me-2"></i> Dashboard
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" id="list-students-tab" href="fees_details.html">
+                            <a class="nav-link active" id="list-students-tab"
+                                href="{% url 'admin_dashboard_pending_details' %}">
                                 <i class="bi bi-card-text"></i> Fees Details
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="list-fees-tab" href="students.html">
+                            <a class="nav-link" id="list-fees-tab" href="{% url 'admin_dashboard_student_details' %}">
                                 <i class="bi bi-people-fill me-2"></i> Students
                             </a>
                         </li>
@@ -116,10 +117,13 @@
                                                 <td>{{item.paid_date}}</td>
                                                 <td>{{item.fees_amount}}</td>
                                                 <td>{{item.receipt_submitted_date}}</td>
-                                                <td>{{item.receipt_status}}</td>
+                                                <td id="status-value-{{item.reference_id}}">
+                                                    {{item.get_receipt_status_display}}</td>
                                                 <td>
                                                     <button class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                                        data-bs-target="#pdfModal">View</button>
+                                                        data-bs-target="#pdfModal"
+                                                        data-bs-ref-id="{{item.reference_id}}"
+                                                        data-bs-url="{{item.fees_receipt.url}}">View</button>
                                                 </td>
                                             </tr>
 
@@ -174,24 +178,21 @@
                 <div class="modal-body">
                     <iframe id="receiptEmbed" src="" width="100%" height="300px"></iframe>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer" id="modal-footer-action">
                     {% csrf_token %}
-                    {% for item in page_obj %}
-                    <input type="hidden" name="reference_id" value="{{ item.reference_id }}"
-                        id="reference-id-{{ item.reference_id }}">
+                    <input type="hidden" name="reference_id" value="" id="reference-id-input">
 
-                    <input type="hidden" name="receipt_status" id="status-accept-{{ item.reference_id }}" value="ACC">
-                    <button class="btn btn-success" hx-post="{% url 'update_fees_receipt_status' %}"
-                        hx-target="#status-{{ item.reference_id }}"
-                        hx-include="#reference-id-{{ item.reference_id }}, #status-accept-{{ item.reference_id }}, [name='csrfmiddlewaretoken']">Accept
+                    <input type="hidden" name="receipt_status" id="status-accept" value="ACC">
+                    <button class="btn btn-success status-update-button"
+                        hx-post="{% url 'update_fees_receipt_status' %}" hx-target=""
+                        hx-include="#reference-id-input, #status-accept, [name='csrfmiddlewaretoken']">Accept
                     </button>
 
-                    <input type="hidden" name="receipt_status" id="status-reject-{{ item.reference_id }}" value="REJ">
-                    <button class="btn btn-danger" hx-post="{% url 'update_fees_receipt_status' %}"
-                        hx-target="#status-{{ item.reference_id }}"
-                        hx-include="#reference-id-{{ item.reference_id }}, #status-reject-{{ item.reference_id }}, [name='csrfmiddlewaretoken']">Reject
+                    <input type="hidden" name="receipt_status" id="status-reject" value="REJ">
+                    <button class="btn btn-danger status-update-button" hx-post="{% url 'update_fees_receipt_status' %}"
+                        hx-target=""
+                        hx-include="#reference-id-input, #status-reject, [name='csrfmiddlewaretoken']">Reject
                     </button>
-                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -242,17 +243,20 @@
             }
         });
 
-        updateSemesterOptions();
         document.addEventListener('DOMContentLoaded', function () {
             var modal = document.getElementById('pdfModal');
             modal.addEventListener('show.bs.modal', function (event) {
                 var button = event.relatedTarget;
                 var url = button.getAttribute('data-bs-url');
-                var modalTitle = modal.querySelector('.modal-title');
+                var ref_id = button.getAttribute('data-bs-ref-id')
                 var modalBodyEmbed = modal.querySelector('#receiptEmbed');
-
-                modalTitle.textContent = 'Receipt';
+                var modalInput = modal.querySelector('#reference-id-input')
+                var receipt_status = document.getElementById(`${ref_id}-status`)
                 modalBodyEmbed.setAttribute('src', url);
+                modalInput.setAttribute('value', ref_id);
+                status_buttons = document.querySelectorAll('.status-update-button')
+                status_buttons[0].setAttribute('hx-target', `#status-value-${ref_id}`)
+                status_buttons[1].setAttribute('hx-target', `#status-value-${ref_id}`)
             });
         });
     </script>
