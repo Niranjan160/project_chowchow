@@ -35,8 +35,8 @@ class StudentForm(forms.ModelForm):
         model = Student
         fields = [
             'register_no', 'name', 'date_of_birth',
-            'phone_number', 'type_of_degree', 'type_of_department',
-            'academic_start_year','academic_end_year', 'address'
+            'phone_number', 'academic_start_year','academic_end_year',
+            'course','address'
             ]
 
 

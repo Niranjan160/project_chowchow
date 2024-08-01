@@ -40,7 +40,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="list-fees-tab" href="{% url 'admin_dashboard_student_details' %}">
-                                <i class="bi bi-people-fill me-2"></i> Students
+                                <i class="bi bi-people-fill me-2"></i> Students Details
                             </a>
                         </li>
                         <li class="nav-item d-flex position-fixed bottom-0">
@@ -56,16 +56,16 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-12 mt-4">
-                                <form class="row g-2 mb-4">
+                                <form class="row g-2 mb-4" action="{% url 'admin_dashboard_pending_details' %}"
+                                    method="get">
+                                    {{fees_details.form.as_p}}
                                     <div class="col-md-2">
-                                        <select class="form-select" id="branchSelect">
-                                            <option selected>Course</option>
+                                        <select class="form-select me-2" id="branchSelect" name="course">
+                                            <option value="MSC AI">MSC AI</option>
+                                            <option value="MSC CSE">MSC CSE</option>
+                                            <option value="MSC DS">MCA DS</option>
                                             <option value="MCA">MCA</option>
-                                            <option value="MSC Computer Science">MSC Computer Science</option>
-                                            <option value="MSC Data Science">MSC Data Science</option>
-                                            <option value="MSC Artificial Intelligence">MSC Artificial Intelligence
-                                            </option>
-                                            <option value="M.TECH">M.TECH</option>
+                                            <option value="MTECH">MTECH</option>
                                         </select>
                                     </div>
                                     <div class="col-md-2">
@@ -76,6 +76,8 @@
                                     <div class="col-md-2">
                                         <select class="form-select" id="feeTypeSelect">
                                             <option selected>Select Fee Type</option>
+                                            <option value="EF">Exam Fees</option>
+                                            <option value="SF">Semester Fees</option>
                                         </select>
                                     </div>
                                     <div class="col-md-2">
@@ -108,7 +110,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for item in page_obj %}
+                                            {% for item in fees_details.qs %}
                                             <tr>
                                                 <td>{{item.reference_id}}</td>
                                                 <td>{{item.student_id.register_no}}</td>

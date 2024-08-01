@@ -8,16 +8,14 @@ from datetime import date
 from django.utils import timezone
 
 
-department_choices = (
-    ("CSE", "Computer Science and Engineering"),
-    ("DS", "Data Science"),
-    ("AI", "Artificial Intelligence"),
-)
-degree_choices = (
-    ("MSC", "Master of Science"),
+course_choices = (
+    ("MSC CSE", "Master of Science Computer Science and Engineering"),
+    ("MSC DS", "Master of Science Data Science"),
+    ("MSC AI", "Master of Science Artificial Intelligence"),
     ("MCA", "Master of Computer Application"),
     ("MTECH", "Master of Technology"),
 )
+
 
 class User(AbstractUser):
 
@@ -57,7 +55,7 @@ class User(AbstractUser):
 def student_profile_image_directory(instance, filename):
     ext = filename.split('.')[-1]
     # path = profile_images/<reg_no>.<img_extension>
-    return "profile_images{1}.{2}".format(
+    return "profile_images{0}.{1}".format(
         instance.register_no,
         ext,
     )
@@ -90,13 +88,9 @@ class Student(models.Model):
         ]
     )
     phone_number = models.PositiveIntegerField()
-    type_of_degree = models.CharField(
-        max_length=5,
-        choices=degree_choices
-    ) #Require validator function
-    type_of_department = models.CharField(
-        max_length=5,
-        choices=department_choices
+    course = models.CharField(
+        max_length=50,
+        choices=course_choices
     )
     academic_start_year = models.DateField(blank=True, null=True)
     academic_end_year = models.DateField(blank=True, null=True)

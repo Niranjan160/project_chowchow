@@ -40,7 +40,7 @@
                         <li class="nav-item">
                             <a class="nav-link active" id="list-fees-tab"
                                 href="{% url 'admin_dashboard_student_details' %}">
-                                <i class="bi bi-people-fill me-2"></i> Students
+                                <i class="bi bi-people-fill me-2"></i> Students Details
                             </a>
                         </li>
                         <li class="nav-item d-flex position-fixed bottom-0">
@@ -55,23 +55,27 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-12 mt-4">
-                                <form class="d-flex mb-4">
-                                    <select class="form-select me-2" id="branchSelect">
-                                        <option selected>Course</option>
+                                <form class="d-flex mb-4" method="get"
+                                    action="{% url 'admin_dashboard_student_details' %}">
+                                    <!-- {{students_details.form.as_p}} -->
+                                    <select class="form-select me-2" id="branchSelect" name="course">
+                                        <option value="MSC AI">MSC AI</option>
+                                        <option value="MSC CSE">MSC CSE</option>
+                                        <option value="MSC DS">MCA DS</option>
                                         <option value="MCA">MCA</option>
-                                        <option value="MSC Computer Science">MSC Computer Science</option>
-                                        <option value="MSC Data Science">MSC Data Science</option>
-                                        <option value="MSC Artificial Intelligence">MSC Artificial Intelligence
-                                        </option>
-                                        <option value="M.TECH">M.TECH</option>
+                                        <option value="MTECH">MTECH</option>
                                     </select>
-                                    <select class="form-select me-2" id="yearSelect">
-                                        <option selected>Year</option>
-                                    </select>
-                                    <select class="form-select me-2" id="feeTypeSelect">
-                                        <option selected>Select Fee Type</option>
-                                    </select>
-                                    <button class="btn btn-outline-success" type="submit">Search</button>
+                                    <!-- Need to add labels -->
+                                    <input class="form-control" type="text" name="register_no"
+                                        placeholder="Register Number">
+                                    <input type="text" name="name" id="name" class="form-control"
+                                        placeholder="Name of the student">
+                                    <input type="date" name="academic_start_year" id="academic_start_year"
+                                        placeholder="Start year" class="form-control">
+                                    <input type="date" name="academic_end_year" id="academic_end_year"
+                                        class="form-control" placeholder="End year">
+                                    <input type="submit" value="Search" class="btn btn-outline-success"
+                                        placeholder="Search">
                                     <a href="{% url 'export_students' %}" class="btn btn-outline-primary">Export</a>
 
                                 </form>
@@ -90,14 +94,14 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for item in page_obj %}
+                                            {% for item in students_details.qs %}
                                             <tr>
                                                 <td>{{item.register_no}}</td>
                                                 <td>{{item.name}}</td>
                                                 <td>{{item.date_of_birth}}</td>
                                                 <td>{{item.phone_number}}</td>
                                                 <td>{{item.get_email}}</td>
-                                                <td>{{item.get_type_of_degree_display}}</td>
+                                                <td>{{item.get_course_display}}</td>
                                                 <td>{{item.academic_start_year}}-{{item.academic_end_year}}</td>
                                                 <td>{{item.address}}</td>
                                                 <td>
@@ -122,7 +126,7 @@
                                             <li class="page-item"><a class="page-link" href="#">Next</a></li>
                                         </ul>
                                       </nav> -->
-                                    <div class="pagination">
+                                    <!-- <div class="pagination">
                                         <span class="step-links">
                                             {% if page_obj.has_previous %}
                                             <a href="?page=1">&laquo; first</a>
@@ -138,7 +142,7 @@
                                             <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
                                             {% endif %}
                                         </span>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>

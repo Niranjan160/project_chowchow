@@ -8,6 +8,7 @@ from datetime import date
 from django.core.paginator import Paginator
 from students.utils import send_reject_email
 import pandas as pd
+from students.filters import Student_filter, Fees_details_filter
 
 def loginPage(request):
     if request.user.is_authenticated:
@@ -64,7 +65,7 @@ def register_student(request):
 
                 student = student_form.save(commit=False)
                 print(user)
-                student.student_id = user
+                student.Student = user
                 student.email = user.email
                 student.save()
 
@@ -108,20 +109,21 @@ def admin_dashboard(request):
 @login_required
 def pending_receipt_details(request):
     context = {}
-    pending_fees_list = Fees_detail.objects.filter(receipt_status="PEN").order_by("-receipt_submitted_date")
-    paginator = Paginator(pending_fees_list, 20)
-    page_number = request.GET.get("page") or 1
-    context["page_obj"] = paginator.get_page(page_number)
+    # pending_fees_list = Fees_detail.objects.filter(receipt_status="PEN").order_by("-receipt_submitted_date")
+    # paginator = Paginator(pending_fees_list, 20)
+    # page_number = request.GET.get("page") or 1
+    # context["page_obj"] = paginator.get_page(page_number)
+    context["fees_details"] = Fees_details_filter(request.GET, Fees_detail.objects.all().order_by("-receipt_submitted_date"))
+    
     return render(request, "students/admin_pending_details.html", context)
 
 @login_required
 def update_fees_receipt_status(request):
     # Need to add exception
-    print("working")
     if request.method == "POST":
         status = request.POST["receipt_status"]
         reference_id = request.POST["reference_id"]
-        print(status, reference_id)
+        # print(status, reference_id)
         student = Fees_detail.objects.get(reference_id=reference_id).student_id
         if status == "REJ":
             send_reject_email(student.name, student.register_no, student.email)
@@ -137,12 +139,15 @@ def admin_dashboard_student_details(request):
     if request.user.is_student():
        return redirect("student_dashboard")
     context = {}
-    students_details = Student.objects.filter(
+    context["students_details"] = Student_filter(request.GET, queryset=Student.objects.filter(
         academic_end_year__year__gte=date.today().year
-    ).order_by('register_no')
-    paginator = Paginator(students_details, 30)
-    page_number = request.GET.get("page") or 1
-    context["page_obj"] = paginator.get_page(page_number)
+    ).order_by('register_no'))
+    # students_details = Student.objects.filter(
+    #     academic_end_year__year__gte=date.today().year
+    # ).order_by('register_no')
+    # paginator = Paginator(students_details, 30)
+    # page_number = request.GET.get("page") or 1
+    # context["page_obj"] = paginator.get_page(page_number)
     return render(request, 'students/admin_dashboard_student_details.html', context)
 
 def export_students_to_excel(request):
