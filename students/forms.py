@@ -36,7 +36,7 @@ class StudentForm(forms.ModelForm):
         fields = [
             'register_no', 'name', 'date_of_birth',
             'phone_number', 'academic_start_year','academic_end_year',
-            'course','address'
+            'course','address', 'email'
             ]
 
 
@@ -50,3 +50,5 @@ class fees_details_form(forms.ModelForm):
             'paid_date': forms.SelectDateWidget,
         }
         
+class ExcelUploadForm(forms.Form):
+    student_details_excel_file = forms.FileField()

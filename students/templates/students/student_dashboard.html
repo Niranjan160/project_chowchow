@@ -2,100 +2,96 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S profile</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>S profile</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 
 <body>
-    <div class="container-fluid">
-        <header class="row text-white" style="background-color: darkblue;">
-            <div class="col-6 col-sm-6 col-md-9">
-                <h4 class="p-4 pt-4">BHARATHIDASAN UNIVERSITY</h4>
-            </div>
-            <div class="dropdown-alignment col-6 col-sm-6 ps-5 col-md-3 text-end">
-                <img style="height: 100px; width: 180px;" src="download1.png" alt="">
-            </div>
-        </header>
-        <div class="row vh-100">
-            <!-- Sidebar -->
-            <div class="col-2 bg-light border-end d-flex flex-column sidebar">
-                <div class="container-fluid pt-1">
+  <div class="container-fluid">
+    <header class="row text-white" style="background-color: darkblue;">
+      <div class="col-6 col-sm-6 col-md-9">
+        <h4 class="p-4 pt-4">BHARATHIDASAN UNIVERSITY</h4>
+      </div>
+      <div class="dropdown-alignment col-6 col-sm-6 ps-5 col-md-3 text-end">
+        <img style="height: 100px; width: 180px;"
+          src="https://upload.wikimedia.org/wikipedia/en/7/7c/Bharathidasan_University_logo.png" alt="">
+      </div>
+    </header>
+    <div class="row vh-100">
+      <!-- Sidebar -->
+      <div class="col-2 bg-light border-end d-flex flex-column sidebar">
+        <div class="container-fluid pt-1">
 
-                    <ul class="nav flex-column nav-pills mb-auto">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="list-home-tab" data-bs-toggle="tab" href="#list-home">
-                                <i class="bi bi-house-door-fill me-2"></i> Home
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="list-semester-fees-tab" data-bs-toggle="tab"
-                                href="#list-semester-fees">
-                                <i class="bi bi-upload me-2"></i> Fees Upload
-                            </a>
-                        </li>
-                        <li class=" dropdown nav-item d-flex position-fixed bottom-0 ">
-                            <a class="nav-link" id="list-settings-tab" data-bs-toggle="tab" href="#list-settings">
-                                <i class="bi bi-gear-fill me-2"></i> Settings
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <!-- Page Content -->
-            <div class="col-10">
-                <div class="tab-content">
-                    <div class="tab-pane fade show active" id="list-home" role="tabpanel"
-                        aria-labelledby="list-home-tab">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-12">
-                                    <h1 class="mt-4">Student Profile</h1>
-                                    <div class="card mb-4">
-                                        <div class="row g-0">
-                                            <div class="col-md-4">
-                                                <img src="dummy-profile-pic.jpg" class="img-fluid rounded-start"
-                                                    alt="Student Photo">
-                                            </div>
-                                            <div class="col-md-8">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">{{student.name}}</h5>
-                                                    <p class="card-text"><strong>Register no:</strong>
-                                                        {{student.register_no}}</p>
-                                                    <p class="card-text"><strong>Course:</strong>
-                                                        {{ student.type_of_degree }}
-                                                        {{ student.get_type_of_department_display }}
-                                                    </p>
-                                                    <p class="card-text"><strong>Academic Year:</strong>
-                                                        {{ student.academic_start_year.year }} -
-                                                        {{ student.academic_end_year.year }}</p>
-                                                    <p class="card-text"><strong>Email:</strong> {{student.email}}</p>
-                                                    <p class="card-text"><strong>Phone:</strong>
-                                                        {{student.phone_number}}</p>
-                                                    <p class="card-text"><strong>Address:</strong>
-                                                        {{ student.address }}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+          <ul class="nav flex-column nav-pills mb-auto">
+            <li class="nav-item">
+              <a class="nav-link active" id="list-home-tab" data-bs-toggle="tab" href="#list-home">
+                <i class="bi bi-house-door-fill me-2"></i> Home
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="list-semester-fees-tab" data-bs-toggle="tab" href="#list-semester-fees">
+                <i class="bi bi-upload me-2"></i> Fees Upload
+              </a>
+            </li>
+            <li class=" dropdown nav-item d-flex position-fixed bottom-0 ">
+              <a class="nav-link" id="list-settings-tab" data-bs-toggle="tab" href="#list-settings">
+                <i class="bi bi-gear-fill me-2"></i> Settings
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- Page Content -->
+      <div class="col-10">
+        <div class="tab-content">
+          <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-tab">
+            <div class="container">
+              <div class="row">
+                <div class="col-12">
+                  <h1 class="mt-4">Student Profile</h1>
+                  <div class="card mb-4">
+                    <div class="row g-0">
+                      <div class="col-md-4">
+                        <img src="{{student.profile_photo.url}}" class="img-fluid rounded-start" alt="Student Photo">
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body">
+                          <h5 class="card-title">{{student.name}}</h5>
+                          <p class="card-text"><strong>Register no:</strong>
+                            {{student.register_no}}</p>
+                          <p class="card-text"><strong>Course:</strong>
+                            {{ student.get_course_display }}
+                          </p>
+                          <p class="card-text"><strong>Academic Year:</strong>
+                            {{ student.academic_start_year.year }} -
+                            {{ student.academic_end_year.year }}</p>
+                          <p class="card-text"><strong>Email:</strong> {{student.email}}</p>
+                          <p class="card-text"><strong>Phone:</strong>
+                            {{student.phone_number}}</p>
+                          <p class="card-text"><strong>Address:</strong>
+                            {{ student.address }}
+                          </p>
                         </div>
+                      </div>
                     </div>
-                    <div class="tab-pane fade" id="list-semester-fees" role="tabpanel"
-                        aria-labelledby="list-semester-fees-tab">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-12">
-                                    <h1 class="mt-4">Fees Upload</h1>
-                                    <div class="border p-4">
-                                        <form class="row g-3" method="post" action="/" enctype="multipart/form-data">
-                                            {% csrf_token %}
-                                            <!-- <div class="col-md-6">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="list-semester-fees" role="tabpanel" aria-labelledby="list-semester-fees-tab">
+            <div class="container">
+              <div class="row">
+                <div class="col-12">
+                  <h1 class="mt-4">Fees Upload</h1>
+                  <div class="border p-4">
+                    <form class="row g-3" method="post" action="/" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      <!-- <div class="col-md-6">
                                                 <label for="selectcourse">Select Course</label>
                                                 <select class="form-select col-md-6">
                                                     <option selected>Course</option>
@@ -106,156 +102,141 @@
                                                     <option value="5">M.TECH</option>
                                                 </select>
                                             </div> -->
-                                            <div class="col-md-6">
-                                                <label for="Selectfeestype" class="form-label"> Select Fees Type</label>
-                                                <select class="form-select me-2" id="feesType"
-                                                    onchange="updateSemesterOptions()" name="type_of_fees">
-                                                    <option value="SF">Semester fees</option>
-                                                    <option value="EF">Examination fees</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label for="selectSemester">Select Semester/Exam</label>
-                                                <select class="form-select col-md-6" id="selectSemester" required
-                                                    name="semester_number">
-                                                    <!-- Options will be dynamically updated by JavaScript -->
-                                                </select>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label for="referenceId" class="form-label">Reference ID</label>
-                                                <input type="text" class="form-control" id="referenceId" required
-                                                    name="reference_id">
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label for="paidDate" class="form-label">Fees Paid Date</label>
-                                                <input type="date" class="form-control" id="paidDate" required
-                                                    name="paid_date">
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label for="paymentAmount" class="form-label">Payment Amount</label>
-                                                <input type="number" class="form-control" id="paymentAmount" required
-                                                    name="fees_amount">
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label for="feeReceipt" class="form-label">Upload Fee Receipt</label>
-                                                <input type="file" class="form-control" id="feesReceipt" accept="pdf/*"
-                                                    required name="fees_receipt">
-                                            </div>
-                                            <div class="col-md-6 mt-5">
-                                                <button type="submit" class="btn btn-primary">Upload Fee</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="mt-4">
-                                        <h2>Upload History</h2>
-                                        <div class="table-responsive">
-                                            <table class="table table-striped">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Reference ID</th>
-                                                        <th>Fee Type</th>
-                                                        <th>Date</th>
-                                                        <th>Amount</th>
-                                                        <th>Status</th>
-                                                        <th>Receipt</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {% for item in fees_history %}
-                                                    <tr>
-                                                        <td>{{item.reference_id}}</td>
-                                                        <td>Semester {{item.semester_number}}</td>
-                                                        <td>{{item.paid_date}}</td>
-                                                        <td>{{item.fees_amount}}</td>
-                                                        <td>{{item.get_receipt_status_display}}</td>
-                                                        <td>
-                                                            <button class="btn btn-primary btn-sm"
-                                                                data-bs-toggle="modal" data-bs-target="#pdfModal"
-                                                                data-bs-url="{{item.fees_receipt.url}}">View</button>
-                                                        </td>
-                                                    </tr>
-                                                    {% endfor %}
-                                                    <!-- Additional rows can be added here -->
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                      <div class="col-md-6">
+                        <label for="Selectfeestype" class="form-label"> Select Fees Type</label>
+                        <select class="form-select me-2" id="feesType" onchange="updateSemesterOptions()"
+                          name="type_of_fees">
+                          <option value="SF">Semester fees</option>
+                          <option value="EF">Examination fees</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="selectSemester">Select Semester/Exam</label>
+                        <select class="form-select col-md-6" id="selectSemester" required name="semester_number">
+                          <!-- Options will be dynamically updated by JavaScript -->
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="referenceId" class="form-label">Reference ID</label>
+                        <input type="text" class="form-control" id="referenceId" required name="reference_id">
+                      </div>
+                      <div class="col-md-6">
+                        <label for="paidDate" class="form-label">Fees Paid Date</label>
+                        <input type="date" class="form-control" id="paidDate" required name="paid_date">
+                      </div>
+                      <div class="col-md-6">
+                        <label for="paymentAmount" class="form-label">Payment Amount</label>
+                        <input type="number" class="form-control" id="paymentAmount" required name="fees_amount">
+                      </div>
+                      <div class="col-md-6">
+                        <label for="feeReceipt" class="form-label">Upload Fee Receipt</label>
+                        <input type="file" class="form-control" id="feesReceipt" accept="pdf/*" required
+                          name="fees_receipt">
+                      </div>
+                      <div class="col-md-6 mt-5">
+                        <button type="submit" class="btn btn-primary">Upload Fee</button>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="mt-4">
+                    <h2>Upload History</h2>
+                    <div class="table-responsive">
+                      <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th>Reference ID</th>
+                            <th>Fee Type</th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Receipt</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for item in fees_history %}
+                          <tr>
+                            <td>{{item.reference_id}}</td>
+                            <td>Semester {{item.semester_number}}</td>
+                            <td>{{item.paid_date}}</td>
+                            <td>{{item.fees_amount}}</td>
+                            <td>{{item.get_receipt_status_display}}</td>
+                            <td>
+                              <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                data-bs-url="{{item.fees_receipt.url}}">View</button>
+                            </td>
+                          </tr>
+                          {% endfor %}
+                          <!-- Additional rows can be added here -->
+                        </tbody>
+                      </table>
                     </div>
-                    <div class="tab-pane fade " id="list-settings" role="tabpanel" aria-labelledby="list-settings-tab">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-12">
-                                    <h1 class="mt-4">Settings</h1>
-                                    <div class="border p-4">
-                                        <form>
-                                            <div class="mb-3">
-                                                <label for="username" class="form-label">Username</label>
-                                                <input type="text" class="form-control" id="username" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="email" class="form-label">Email</label>
-                                                <input type="email" class="form-control" id="email" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="profilePhoto" class="form-label">Profile Photo</label>
-                                                <input type="file" class="form-control" id="profilePhoto"
-                                                    accept="image/*">
-                                            </div>
-                                            <button type="submit" class="btn btn-primary">Save Changes</button>
-                                        </form>
-                                        <hr>
-                                        <a href="logout" class="btn btn-danger">Logout</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                  </div>
                 </div>
+              </div>
             </div>
-        </div>
-        <div class="container-fluid bg-info">
+          </div>
+          <div class="tab-pane fade " id="list-settings" role="tabpanel" aria-labelledby="list-settings-tab">
             <div class="container">
-                <!-- Additional content goes here -->
-                <div class="row">
-                    <div class="col">
-                        <!-- Additional content can be added here -->
-                    </div>
+              <div class="row">
+                <div class="col-12">
+                  <h1 class="mt-4">Settings</h1>
+                  <div class="border p-4">
+                    <form>
+                      <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" required>
+                      </div>
+                      <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" required>
+                      </div>
+                      <div class="mb-3">
+                        <label for="profilePhoto" class="form-label">Profile Photo</label>
+                        <input type="file" class="form-control" id="profilePhoto" accept="image/*">
+                      </div>
+                      <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+                    <hr>
+                    <a href="logout" class="btn btn-danger">Logout</a>
+                  </div>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
 
-    <div class="modal fade" id="pdfModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="pdfModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="pdfModalLabel">Receipt</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <iframe id="receiptEmbed" src="" width="100%" height="300px"></iframe>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
+  </div>
+
+  <div class="modal fade" id="pdfModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="pdfModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="pdfModalLabel">Receipt</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <div class="modal-body">
+          <iframe id="receiptEmbed" src="" width="100%" height="650px"></iframe>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
-    <script>
-        function updateSemesterOptions() {
-            const feesType = document.getElementById('feesType').value;
-            const selectSemester = document.getElementById('selectSemester');
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+  <script>
+    function updateSemesterOptions() {
+      const feesType = document.getElementById('feesType').value;
+      const selectSemester = document.getElementById('selectSemester');
 
-            if (feesType === 'SF') {
-                selectSemester.innerHTML = `
+      if (feesType === 'SF') {
+        selectSemester.innerHTML = `
                     <option value="1">Semester 1</option>
                     <option value="2">Semester 2</option>
                     <option value="3">Semester 3</option>
@@ -269,8 +250,8 @@
                     <option value="11">Semester 11</option>
                     <option value="12">Semester 12</option>
                 `;
-            } else if (feesType === 'EF') {
-                selectSemester.innerHTML = `
+      } else if (feesType === 'EF') {
+        selectSemester.innerHTML = `
                     <option value="1">Exam 1</option>
                     <option value="2">Exam 2</option>
                     <option value="3">Exam 3</option>
@@ -284,24 +265,24 @@
                     <option value="11">Exam 11</option>
                     <option value="12">Exam 12</option>
                 `;
-            }
-        }
-        updateSemesterOptions();
+      }
+    }
+    updateSemesterOptions();
 
-        document.addEventListener('DOMContentLoaded', function () {
-            var modal = document.getElementById('pdfModal');
-            modal.addEventListener('show.bs.modal', function (event) {
-                var button = event.relatedTarget;
-                var url = button.getAttribute('data-bs-url');
-                var modalTitle = modal.querySelector('.modal-title');
-                var modalBodyEmbed = modal.querySelector('#receiptEmbed');
+    document.addEventListener('DOMContentLoaded', function () {
+      var modal = document.getElementById('pdfModal');
+      modal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;
+        var url = button.getAttribute('data-bs-url');
+        var modalTitle = modal.querySelector('.modal-title');
+        var modalBodyEmbed = modal.querySelector('#receiptEmbed');
 
-                modalTitle.textContent = 'Receipt';
-                modalBodyEmbed.setAttribute('src', url);
-            });
-        });
+        modalTitle.textContent = 'Receipt';
+        modalBodyEmbed.setAttribute('src', url);
+      });
+    });
 
-    </script>
+  </script>
 </body>
 
 </html>

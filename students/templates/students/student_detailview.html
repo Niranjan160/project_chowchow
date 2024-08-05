@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <header class="row text-white" style="background-color: darkblue;">
+            <div class="col-6 col-sm-6 col-md-9">
+                <h4 class="p-4 pt-4">BHARATHIDASAN UNIVERSITY</h4>
+            </div>
+            <div class="dropdown-alignment col-6 col-sm-6 ps-5 col-md-3 text-end">
+                <img style="height: 100px; width: 180px;"
+                    src="https://upload.wikimedia.org/wikipedia/en/7/7c/Bharathidasan_University_logo.png" alt="">
+            </div>
+        </header>
+        <div class="row vh-100">
+            <!-- Page Content -->
+            <div class="col">
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="list-home" role="tabpanel"
+                        aria-labelledby="list-home-tab">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h1 class="mt-4">Student Profile</h1>
+                                    <div class="card mb-4">
+                                        <div class="row g-0">
+                                            <div class="col-md-4">
+                                                <img src="{{student.profile_photo.url}}" class="img-fluid rounded-start"
+                                                    alt="Student Photo">
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">{{student.name}}</h5>
+                                                    <p class="card-text"><strong>Register no:</strong>
+                                                        {{student.register_no}}</p>
+                                                    <p class="card-text"><strong>Course:</strong>
+                                                        {{ student.get_course_display }}
+                                                    </p>
+                                                    <p class="card-text"><strong>Academic Year:</strong>
+                                                        {{ student.academic_start_year.year }} -
+                                                        {{ student.academic_end_year.year }}</p>
+                                                    <p class="card-text"><strong>Email:</strong> {{student.email}}</p>
+                                                    <p class="card-text"><strong>Phone:</strong>
+                                                        {{student.phone_number}}</p>
+                                                    <p class="card-text"><strong>Address:</strong>
+                                                        {{ student.address }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <h2>Upload History</h2>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Reference ID</th>
+                                            <th>Fee Type</th>
+                                            <th>Date</th>
+                                            <th>Amount</th>
+                                            <th>Status</th>
+                                            <th>Receipt</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in fees_history %}
+                                        <tr>
+                                            <td>{{item.reference_id}}</td>
+                                            <td>Semester {{item.semester_number}}</td>
+                                            <td>{{item.paid_date}}</td>
+                                            <td>{{item.fees_amount}}</td>
+                                            <td>{{item.get_receipt_status_display}}</td>
+                                            <td>
+                                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                                    data-bs-target="#pdfModal"
+                                                    data-bs-url="{{item.fees_receipt.url}}">View</button>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                        <!-- Additional rows can be added here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal fade" id="pdfModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="pdfModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="pdfModalLabel">Receipt</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <iframe id="receiptEmbed" src="" width="100%" height="650px"></iframe>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var modal = document.getElementById('pdfModal');
+            modal.addEventListener('show.bs.modal', function (event) {
+                var button = event.relatedTarget;
+                var url = button.getAttribute('data-bs-url');
+                var modalTitle = modal.querySelector('.modal-title');
+                var modalBodyEmbed = modal.querySelector('#receiptEmbed');
+
+                modalTitle.textContent = 'Receipt';
+                modalBodyEmbed.setAttribute('src', url);
+            });
+        });
+
+    </script>
+</body>
+
+</html>

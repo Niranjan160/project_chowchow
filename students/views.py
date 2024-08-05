@@ -3,12 +3,16 @@ from django.http import HttpResponseBadRequest, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from students.models import Student, Fees_detail
-from students.forms import fees_details_form, CustomUserCreationForm, StudentForm
+from students.forms import fees_details_form, CustomUserCreationForm, StudentForm, ExcelUploadForm
 from datetime import date
-from django.core.paginator import Paginator
+# from django.core.paginator import Paginator
 from students.utils import send_reject_email
 import pandas as pd
 from students.filters import Student_filter, Fees_details_filter
+from datetime import timedelta
+from django.utils import timezone
+import openpyxl
+
 
 def loginPage(request):
     if request.user.is_authenticated:
@@ -59,10 +63,13 @@ def register_student(request):
         if request.method == 'POST':
             user_form = CustomUserCreationForm(request.POST)
             student_form = StudentForm(request.POST)
+            print("working")
+            print(user_form.is_valid())
+            print(student_form.errors)
             if user_form.is_valid() and student_form.is_valid():
                 user = user_form.save(commit=False)
                 user.save()
-
+                print("s2 working")
                 student = student_form.save(commit=False)
                 print(user)
                 student.Student = user
@@ -101,9 +108,16 @@ def admin_dashboard(request):
     if request.user.is_student():
        return redirect("student_dashboard")
     context = {}
+    now = timezone.now()
+    thirty_days_ago = now - timedelta(days=30)
     context["students_count"] = Student.objects.filter(
         academic_end_year__year__gte=date.today().year
     ).count()
+    context["uploaded_count"] = Fees_detail.objects.filter(receipt_submitted_date__gte=thirty_days_ago).count()
+    context["verified_count"] = Fees_detail.objects.filter(receipt_submitted_date__gte=thirty_days_ago, receipt_status="ACC").count()
+    context["pending_count"] = Fees_detail.objects.filter(receipt_submitted_date__gte=thirty_days_ago,receipt_status="PEN").count()
+    context["fees_details"] =  Fees_detail.objects.filter(receipt_status="PEN").order_by("-receipt_submitted_date")
+
     return render(request, 'students/admin_dashboard.html', context)
 
 @login_required
@@ -125,12 +139,14 @@ def update_fees_receipt_status(request):
         reference_id = request.POST["reference_id"]
         # print(status, reference_id)
         student = Fees_detail.objects.get(reference_id=reference_id).student_id
+        status_return = "Accepted"
         if status == "REJ":
+            status_return = "Rejected"
             send_reject_email(student.name, student.register_no, student.email)
         fees_detail = Fees_detail.objects.get(reference_id=reference_id)
         fees_detail.receipt_status = status
         fees_detail.save()
-        return HttpResponse(f"{fees_detail.receipt_status}") # uodate it to jsonResponse
+        return HttpResponse(f"{status_return}") # uodate it to jsonResponse
     else: 
         return HttpResponseBadRequest("Not like this :)")
 
@@ -172,3 +188,40 @@ def export_students_to_excel(request):
         df.to_excel(writer, sheet_name='Students', index=False)
 
     return response
+
+
+def upload_excel(request):
+    if request.method == "POST":
+        form = ExcelUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            excel_file = request.FILES["excel_file"]
+            wb = openpyxl.load_workbook(excel_file)
+            ws = wb.active
+
+            for row in ws.iter_rows(min_row=2):  # Assuming first row is header
+                email = row[0].value
+                user_type = row[1].value
+                academic_year = row[2].value
+                profile_photo = row[3].value
+                course = row[4].value
+
+                # Create or update student record
+                user, created = Student.objects.get_or_create(email=email, defaults={'user_type': user_type})
+                Student.objects.update_or_create(user=user, defaults={
+                    'academic_year': academic_year,
+                    'profile_photo': profile_photo,
+                    'course': course,
+                })
+            # messages.success(request, "Students have been added/updated successfully")
+            return redirect("upload_excel")
+    else:
+        form = ExcelUploadForm()
+
+    return render(request, "upload_excel.html", {"form": form})
+
+@login_required
+def student_detailview(request,register_no):
+    context = {}
+    context["student"] = Student.objects.get(register_no=register_no)
+    context["fees_history"] = Fees_detail.objects.filter(student_id=context["student"])
+    return render(request, 'students/student_detailview.html', context=context)
